@@ -13,16 +13,18 @@ In this guide, I\'ll walk you through the step-by-step process of:
 
 <!-- -->
 
-1.  Launching an Ubuntu EC2 Instance on AWS
+1. Launching an Ubuntu EC2 Instance on AWS
 
-![](media/image1.png){width="6.5in" height="3.2875in"}
+   ![](images/1.Launching an Ubuntu EC2 instance.png)
 
-2: Connecting to the Instance via SSH
+2. Connecting to the Instance via SSH
 
-![](media/image2.png){width="6.5in" height="3.134027777777778in"}
+   ![](images/2.Connecting to the instance via SSH.png)
 
-3: Installing and Configuring Apache on Ubuntu EC2
+3. Installing and Configuring Apache on Ubuntu EC2
 
-![](media/image3.png){width="6.5in" height="3.30625in"}
+   ![](images/3.Installing and configuring Apache to serve web pages.png)
 
-![](media/image4.png){width="6.5in" height="3.609027777777778in"}
+4. Final Configuration
+
+   ![](images/result.png)
