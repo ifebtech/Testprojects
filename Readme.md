@@ -1,232 +1,154 @@
-**Step 1: Launching an Ubuntu EC2 Instance on AWS**
+Setting Up a Web Server on AWS (Ubuntu EC2 + Apache)
 
-**1. Log in to AWS Management Console**
+In this guide, I'll walk you through the step-by-step process of setting up a web server on AWS. This includes launching an Ubuntu EC2 instance, connecting to it via SSH, and installing Apache to serve web pages.
 
--   Go to [AWS Console](https://aws.amazon.com/console/)
+Step 1: Launching an Ubuntu EC2 Instance on AWS
 
--   Sign in to your AWS account.
+1. Log in to AWS Management Console
 
-**2. Navigate to EC2 Dashboard**
+Go to AWS Console.
 
--   In the AWS Management Console, search for **EC2** in the search bar.
+Sign in to your AWS account.
 
--   Click on **EC2** to open the EC2 Dashboard.
+2. Navigate to the EC2 Dashboard
 
-**3. Launch a New Instance**
+In the AWS Management Console, search for EC2 in the search bar.
 
--   Click **Launch Instance**.
+Click on EC2 to open the EC2 Dashboard.
 
-**4. Configure Instance Details**
+3. Launch a New Instance
 
--   **Name your instance**: (e.g., Ubuntu-Server)
+Click Launch Instance.
 
--   **Choose Amazon Machine Image (AMI)**:
+4. Configure Instance Details
 
-    -   Select **Ubuntu Server 22.04 LTS** (or any preferred version).
+Name your instance: (e.g., Ubuntu-Server)
 
--   **Choose Instance Type**:
+Choose Amazon Machine Image (AMI):
 
-    -   Select **t2.micro** (free tier eligible).
+Select Ubuntu Server 22.04 LTS (or your preferred version).
 
-**5. Configure Key Pair**
+Choose Instance Type:
 
--   Create a new key pair or use an existing one.
+Select t2.micro (free tier eligible).
 
--   Download and store the key securely (you will need it to connect via
-    SSH).
+5. Configure Key Pair
 
-**6. Configure Network Settings**
+Create a new key pair or use an existing one.
 
--   Enable **Allow SSH traffic (Port 22)**.
+Download and store the key securely (you will need it to connect via SSH).
 
--   Allow **HTTP traffic (Port 80)** for web access.
+6. Configure Network Settings
 
-**7. Configure Storage**
+Enable Allow SSH traffic (Port 22).
 
--   Set the storage to at least **8 GB** (default).
+Allow HTTP traffic (Port 80) for web access.
 
-**8. Launch the Instance**
+7. Configure Storage
 
--   Click **Launch Instance**.
+Set the storage to at least 8 GB (default).
 
--   Wait for the instance to initialize (takes a few minutes).
+8. Launch the Instance
 
-------------------------------------------------------------------------
+Click Launch Instance.
 
-**Step 2: Connecting to the Instance via SSH**
+Wait for the instance to initialize (takes a few minutes).
+
+Step 2: Connecting to the Instance via SSH
 
 Once your instance is running, follow these steps to connect:
 
-**1. Get the Public IP Address**
+1. Get the Public IP Address
 
--   Go to the **EC2 Dashboard**.
+Go to the EC2 Dashboard.
 
--   Click on your running instance.
+Click on your running instance.
 
--   Copy the **Public IP Address** (in your case: 54.221.78.198).
+Copy the Public IP Address.
 
-**2. Open a Terminal (or Command Prompt)**
+2. Open a Terminal (or Command Prompt)
 
-If you\'re on **Linux or macOS**, open the Terminal.\
-If you\'re on **Windows**, open **PowerShell** or use an SSH client like
-PuTTY.
+Linux/macOS users: Open Terminal.
 
-**3. Navigate to the Location of Your Key File**
+Windows users: Open PowerShell or use an SSH client like PuTTY.
 
-If your .pem key file is in the **Downloads** folder, move into that
-directory:
+3. Navigate to the Location of Your Key File
 
-bash
+If your .pem key file is in the Downloads folder, move into that directory:
 
-CopyEdit
+cd ~/Downloads
 
-cd \~/Downloads
-
-**4. Set Proper Permissions for the Key File**
+4. Set Proper Permissions for the Key File
 
 Run this command to ensure the key has the correct permissions:
 
-bash
-
-CopyEdit
-
 chmod 400 your-key.pem
 
-*(Replace your-key.pem with the actual key file name.)*
+(Replace your-key.pem with the actual key file name.)
 
-**5. Connect to the EC2 Instance**
+5. Connect to the EC2 Instance
 
 Run the following SSH command to log in to your server:
 
-bash
+ssh -i your-key.pem ubuntu@<Public-IP>
 
-CopyEdit
+(Replace your-key.pem with the actual key file name and <Public-IP> with your instance's public IP.)
 
-ssh -i your-key.pem ubuntu@54.221.78.198
-
-*(Replace your-key.pem with the actual key file name.)*
-
-**6. Verify Connection**
+6. Verify Connection
 
 If everything is set up correctly, you should see something like this:
 
-bash
-
-CopyEdit
-
 Welcome to Ubuntu 22.04 LTS (GNU/Linux 5.15.0-1036-aws x86_64)
 
-This means you have successfully connected to your Ubuntu EC2 instance
-via SSH! 🎉
+This confirms that you have successfully connected to your Ubuntu EC2 instance via SSH! 🎉
 
-------------------------------------------------------------------------
+Step 3: Installing and Configuring Apache on Ubuntu EC2
 
-**Step 3: Installing and Configuring Apache on Ubuntu EC2**
+Now that you're connected to your Ubuntu EC2 instance via SSH, let's install and configure Apache to serve web pages.
 
-Now that you\'re connected to your Ubuntu EC2 instance via SSH, the next
-step is to install and configure Apache so it can serve web pages.
+1. Update the Package List
 
-------------------------------------------------------------------------
+Before installing any software, update the package list to ensure you have the latest versions:
 
-**1. Update the Package List**
+sudo apt update
 
-Before installing any software, it\'s a good practice to update the
-package list to ensure you have the latest versions.
+2. Install Apache
 
-Run the following command:
+Run the following command to install Apache:
 
-bash
+sudo apt install apache2 -y
 
-CopyEdit
+(The -y flag automatically confirms the installation.)
 
-*sudo apt update*
+3. Start and Enable Apache
 
-This will refresh the list of available packages and their versions.
+Once installed, start the Apache service and enable it to launch automatically at system boot:
 
-------------------------------------------------------------------------
-
-**2. Install Apache**
-
-Now, install Apache by running:
-
-bash
-
-CopyEdit
-
-*sudo apt install apache2 -y*
-
-The -y flag automatically confirms the installation, so you don't have
-to type \"yes\" manually.
-
-------------------------------------------------------------------------
-
-**3. Start and Enable Apache**
-
-Once installed, start the Apache service and enable it to launch
-automatically at system boot:
-
-bash
-
-CopyEdit
-
-*sudo systemctl start apache2*
-
-*sudo systemctl enable apache2*
+sudo systemctl start apache2
+sudo systemctl enable apache2
 
 To verify that Apache is running, check its status:
 
-bash
+sudo systemctl status apache2
 
-CopyEdit
+(Press Q to exit the status view.)
 
-*sudo systemctl status apache2*
+4. Allow HTTP Traffic in Firewall (if necessary)
 
-If Apache is running, you should see output similar to this:
+If a firewall is enabled, allow traffic on port 80 (HTTP):
 
-bash
-
-CopyEdit
-
-*● apache2.service - The Apache HTTP Server*
-
-*Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor
-preset: enabled)*
-
-*Active: active (running) since \...*
-
-Press **Q** to exit the status view.
-
-------------------------------------------------------------------------
-
-**4. Allow HTTP Traffic in Firewall (if necessary)**
-
-If you have a firewall enabled, allow traffic on port **80** (HTTP) so
-the web server can be accessed:
-
-bash
-
-CopyEdit
-
-*sudo ufw allow \'Apache\'*
+sudo ufw allow 'Apache'
 
 To check the firewall status, run:
 
-bash
+sudo ufw status
 
-CopyEdit
+5. Verify Apache Installation
 
-*sudo ufw status*
+Open your web browser and enter your EC2 instance's public IP address:
 
-------------------------------------------------------------------------
+🔗 http://<Public-IP>/
 
-**5. Verify Apache Installation**
+If Apache is installed correctly, you should see the default Apache welcome page that says:
 
-To confirm that Apache is running, open your web browser and enter your
-EC2 instance's **public IP address**:
-
-🔗 **Open:** <http://54.221.78.198/>
-
-If Apache is installed correctly, you should see the **default Apache
-welcome page** that says:
-
-**"Apache2 Ubuntu Default Page"**
+"Apache2 Ubuntu Default Page"
