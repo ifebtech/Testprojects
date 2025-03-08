@@ -98,7 +98,7 @@ Paste the following configuration:
  
  
 
-Conclusion
+Conclusion:
 By following these steps, you have successfully set up a LEMP stack on an AWS EC2 Ubuntu instance, configured Nginx, enabled PHP processing, and secured MySQL for database management.
 This setup provides a solid foundation for deploying web applications.
 
